@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
   selector: 'app-area-chart',
   templateUrl: './area-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true
 })
 export class AreaChartComponent {
   width = signal(300);
