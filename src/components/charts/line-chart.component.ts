@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
 })
 export class LineChartComponent {
   width = signal(300);
@@ -42,6 +41,7 @@ export class LineChartComponent {
     const line = this.linePath();
     const h = this.height();
     const p = this.padding();
+    // FIX: 'xs' was not defined in this scope. Get it from the xScale signal.
     const xs = this.xScale();
     return `${line} L ${xs(this.data().length - 1)},${h - p} L ${xs(0)},${h - p} Z`;
   });

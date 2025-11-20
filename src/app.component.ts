@@ -9,7 +9,6 @@ import { GeminiService } from './services/gemini.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     PulseHeaderComponent,
     AiSandboxComponent,

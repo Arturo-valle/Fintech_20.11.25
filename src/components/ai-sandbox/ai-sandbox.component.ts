@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, WritableSignal, inject, signal, effect } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { GeminiService } from '../../services/gemini.service';
 
 interface Message {
@@ -11,16 +10,14 @@ interface Message {
   selector: 'app-ai-sandbox',
   templateUrl: './ai-sandbox.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule],
-  standalone: true
 })
 export class AiSandboxComponent {
   @ViewChild('chatContainer') private chatContainer!: ElementRef<HTMLDivElement>;
   
-  geminiService = inject(GeminiService);
+  private geminiService = inject(GeminiService);
 
   messages: WritableSignal<Message[]> = signal([
-    { sender: 'ai', text: 'Bienvenido al Sandbox Regulatorio FintechCR. Soy un experto en normativa SUGEF, Ley 8204 y estándares del BCCR. ¿En qué puedo asesorarte hoy?' }
+    { sender: 'ai', text: 'Bienvenido al Sandbox Regulatorio con IA. ¿Cómo puedo asistirle hoy con las regulaciones financieras de Costa Rica?' }
   ]);
   currentPrompt = signal('');
   loading = signal(false);
@@ -35,16 +32,10 @@ export class AiSandboxComponent {
     });
   }
 
-  async sendMessage(event?: Event) {
-    if (event) event.preventDefault();
-
+  async sendMessage(event: Event) {
+    event.preventDefault();
     const prompt = this.currentPrompt().trim();
     if (!prompt || this.loading()) return;
-
-    if (!this.geminiService.hasApiKey()) {
-      this.error.set("Por favor, conecta tu API Key en el encabezado para usar el asistente.");
-      return;
-    }
 
     // Add user message
     this.messages.update(msgs => [...msgs, { sender: 'user', text: prompt }]);
@@ -57,7 +48,7 @@ export class AiSandboxComponent {
       const aiResponse = await this.geminiService.getRegulatoryResponse(prompt);
       this.messages.update(msgs => [...msgs, { sender: 'ai', text: aiResponse }]);
     } catch (e: any) {
-       this.error.set(e?.toString() ?? 'Ocurrió un error de conexión con la IA.');
+       this.error.set(e?.toString() ?? 'Ocurrió un error desconocido.');
     } finally {
       this.loading.set(false);
       this.scrollToBottom();
@@ -69,6 +60,6 @@ export class AiSandboxComponent {
       if (this.chatContainer) {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
       }
-    }, 100);
+    }, 0);
   }
 }

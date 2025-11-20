@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
   selector: 'app-radar-chart',
   templateUrl: './radar-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
 })
 export class RadarChartComponent {
   size = signal(180);

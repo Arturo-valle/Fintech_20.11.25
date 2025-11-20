@@ -1,5 +1,0 @@
-
-> fintechcr-neural-nexus@0.0.0 dev
-> ng serve
-
-sh: 1: ng: not found

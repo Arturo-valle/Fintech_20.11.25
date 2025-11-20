@@ -1,4 +1,0 @@
- [1mPort 3000 is already in use.
-Would you like to use a different port?[22m [2m(Y/n)[22m[47G
-[?25hAn unhandled exception occurred: Port 3000 is already in use. Use '--port' to specify a different port.
-See "/tmp/ng-yhKLp4/angular-errors.log" for further details.
