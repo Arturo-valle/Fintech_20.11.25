@@ -8,5 +8,6 @@ import { LineChartComponent } from '../charts/line-chart.component';
   templateUrl: './market-intelligence.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AreaChartComponent, RadarChartComponent, LineChartComponent],
+  standalone: true
 })
 export class MarketIntelligenceComponent {}
