@@ -1,0 +1,52 @@
+<div class="professional-card flex flex-col h-[500px] lg:h-full">
+  <div class="flex items-center space-x-2 p-4 border-b border-slate-200">
+    <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"></path><path d="m12 14 4 4"></path><path d="M12 14 8 4l-4 4 4 4"></path><path d="M12 14 8 20l-4-4 4-4"></path><path d="m12 14-4 4"></path><path d="m12 14-4-4"></path><path d="m12 14 4-4"></path><path d="m12 14-4 4 4 4"></path><path d="m12 14 4 4-4 4"></path></svg>
+    <h2 class="font-bold text-lg text-slate-800">Sandbox Regulatorio con IA</h2>
+  </div>
+  
+  <div #chatContainer class="flex-grow p-4 overflow-y-auto space-y-4 bg-slate-100/50">
+    @for (message of messages(); track message) {
+      <div [class]="'flex ' + (message.sender === 'user' ? 'justify-end' : 'justify-start')">
+        <div [class]="'max-w-md p-3 rounded-lg ' + (message.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-800')">
+          <p class="whitespace-pre-wrap">{{ message.text }}</p>
+        </div>
+      </div>
+    }
+    @if (loading()) {
+      <div class="flex justify-start">
+          <div class="max-w-md p-3 rounded-lg bg-slate-200 text-slate-800">
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse [animation-delay:0.4s]"></div>
+                <span class="text-sm text-slate-600">Analizando bases de datos legales...</span>
+              </div>
+          </div>
+      </div>
+    }
+     @if (error()) {
+      <div class="flex justify-start">
+          <div class="max-w-md p-3 rounded-lg bg-red-100 border border-red-400 text-red-700">
+              <p class="font-bold">Error</p>
+              <p>{{ error() }}</p>
+          </div>
+      </div>
+    }
+  </div>
+
+  <div class="p-4 border-t border-slate-200">
+    <form (submit)="sendMessage($event)" class="flex items-center space-x-2">
+      <input #promptInput 
+        (input)="currentPrompt.set(promptInput.value)" 
+        [value]="currentPrompt()"
+        [disabled]="loading()"
+        type="text" 
+        placeholder="Ej: Explique la SUGEF 11-18..."
+        class="flex-grow bg-white border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition placeholder:text-slate-400"
+      >
+      <button type="submit" [disabled]="loading() || currentPrompt().trim() === ''" class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-md transition-colors flex items-center">
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </form>
+  </div>
+</div>

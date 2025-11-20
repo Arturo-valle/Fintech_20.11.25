@@ -1,0 +1,25 @@
+<div class="w-full h-full text-xs text-slate-500">
+  <svg [attr.viewBox]="'0 0 ' + width() + ' ' + height()" class="w-full h-full">
+    <defs>
+      <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stop-color="#38bdf8" stop-opacity="0.4"/>
+        <stop offset="95%" stop-color="#38bdf8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Grid Lines -->
+    @for(y of gridLines(); track y) {
+      <line [attr.x1]="padding()" [attr.y1]="y" [attr.x2]="width() - padding()" [attr.y2]="y" stroke="#e2e8f0" stroke-width="1"/>
+    }
+
+    <!-- Fill under line -->
+    <path [attr.d]="fillPath()" fill="url(#lineGradient)" stroke="none"/>
+    
+    <!-- Main line -->
+    <path [attr.d]="linePath()" fill="none" stroke="#0ea5e9" stroke-width="2"/>
+
+    <!-- Y-Axis Labels -->
+    <text [attr.x]="padding() - 5" [attr.y]="yScale()(max())" fill="#64748b" text-anchor="end">{{ max().toFixed(0) }}</text>
+    <text [attr.x]="padding() - 5" [attr.y]="yScale()(min())" fill="#64748b" text-anchor="end">{{ min().toFixed(0) }}</text>
+  </svg>
+</div>

@@ -1,0 +1,30 @@
+<div class="w-full h-full text-xs text-slate-500">
+  <svg [attr.viewBox]="'0 0 ' + width() + ' ' + height()" class="w-full h-full">
+    <defs>
+      <linearGradient id="latencyGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stop-color="#f87171" stop-opacity="0.7"/>
+        <stop offset="95%" stop-color="#f87171" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="volumeGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stop-color="#38bdf8" stop-opacity="0.7"/>
+        <stop offset="95%" stop-color="#38bdf8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    
+    <!-- Grid Lines -->
+    @for(y of gridLines(); track y) {
+      <line [attr.x1]="padding()" [attr.y1]="y" [attr.x2]="width() - padding()" [attr.y2]="y" stroke="#e2e8f0" stroke-width="1"/>
+    }
+    
+    <!-- Latency Area -->
+    <path [attr.d]="latencyPath()" fill="url(#latencyGradient)" stroke="#ef4444" stroke-width="1.5"/>
+    
+    <!-- Volume Area -->
+    <path [attr.d]="volumePath()" fill="url(#volumeGradient)" stroke="#0ea5e9" stroke-width="1.5"/>
+
+    <!-- Y-Axis Labels -->
+    <text [attr.x]="padding() - 5" y="15" fill="#ef4444" text-anchor="end">Latencia (ms)</text>
+    <text [attr.x]="padding() - 5" [attr.y]="height() - 5" fill="#0ea5e9" text-anchor="end">Volumen</text>
+
+  </svg>
+</div>
